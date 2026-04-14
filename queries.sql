@@ -36,3 +36,26 @@ JOIN orders o ON oi.order_id = o.order_id
 JOIN customers c ON o.customer_id = c.customer_id
 GROUP BY c.customer_id
 ORDER BY total_spent DESC;
+
+--Customer Lifetime Value (CLV)
+SELECT 
+    c.customer_id,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    SUM(oi.price) AS total_spent
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+GROUP BY c.customer_id
+ORDER BY total_spent DESC;
+
+--Average Order Value (AOV)
+SELECT 
+    AVG(order_total) AS avg_order_value
+FROM (
+    SELECT 
+        o.order_id,
+        SUM(oi.price) AS order_total
+    FROM orders o
+    JOIN order_items oi ON o.order_id = oi.order_id
+    GROUP BY o.order_id
+) sub;
