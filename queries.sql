@@ -10,8 +10,8 @@ FROM order_items;
 SELECT product_id, SUM(price) AS revenue
 FROM order_items
 GROUP BY product_id
-ORDER BY revenue DESC;
-
+ORDER BY revenue DESC
+Limit 5;
 -- 3. Revenue by State
 SELECT c.customer_state, SUM(oi.price) AS revenue
 FROM order_items oi
